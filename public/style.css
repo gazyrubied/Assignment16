@@ -1,0 +1,165 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #c9a3a3;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+h2{
+    display: none;
+}
+.columns {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 20px auto;
+    color: #333;
+}
+
+.player {
+    background-color: #9b8b8b;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.player:hover {
+    transform: scale(1.05);
+}
+
+#add-link {
+    display: block;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px auto;
+    width: 100px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#add-link:hover {
+    background-color: #45a049;
+}
+.player-image {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-right: 10px;
+  }
+  
+.close{
+    height: 20px;
+    align-self: center;
+}
+#add-edit-title{
+text-align:  center;
+}
+#add-edit-player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#add-edit-player-form {
+    max-width: 400px; 
+    margin: 0 auto; 
+}
+
+#delete-link{
+    cursor: pointer;
+    font-size: 25px;
+}
+#edit-link{
+    cursor: pointer;
+    font-size: 25px;
+}
+.close {
+    font-size: 24px; 
+    cursor: pointer;
+}
+
+.dialog.transparent {
+    opacity: 0;
+    pointer-events: none;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin-bottom: 250px;
+    align-self: center;
+    margin: 0 auto;
+}
+#success-message {
+
+    color: green;
+    margin-top: 10px;
+}
+
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+.success-message,
+.error-message {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    display: none;
+    z-index: 2;
+}
+
+.error-message {
+    background-color: #f44336;
+}
+
+@media screen and (max-width: 600px) {
+    .columns {
+        justify-content: center;
+    }
+
+    .player {
+        width: 100%;
+    }
+}

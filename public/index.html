@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1> Players</h1>
+        <a href="#" id="add-link">Add Player</a>
+    </header>
+
+    <div class="columns two-columns">
+        <div id="player-list" class="columns"></div>
+        <div id="player-details-column">
+            <h2>Details</h2>
+
+            <div id="player-details"></div>
+        </div>
+    </div>
+    <div id="add-edit-player-container" class="dialog transparent">
+        <span class="close">&times;</span>
+
+        <h3 id="add-edit-title">Soccer Player</h3>
+        <form id="add-edit-player-form" method="post">
+            <input type="hidden" name="_id" value="-1" />
+            <p>
+                <label for="name ">Player Name:</label>
+                <input type="text" id="name" name="name" required />
+            </p>
+            <p>
+                <label for="team">Team:</label>
+                <input type="text" id="team" name="team" required />
+            </p>
+
+            <p>
+                <label for="position">Position:</label>
+                <input type="text" id="position" name="position" required />
+            </p>
+
+            <p>
+                <label for="nationality">Nationality:</label>
+                <input type="text" id="nationality" name="nationality" required />
+            </p>
+
+            <p>
+                <label for="goalsScored">Goals Scored:</label>
+                <input type="number" id="goalsScored" name="goalsScored" required />
+            </p>
+
+            <p>
+                <label for="assists">Assists:</label>
+                <input type="number" id="assists" name="assists" required />
+            </p>
+
+            <p id="achievements-p">
+                <label class="inline">Achievements:</label>
+                <a href="#" id="add-achievement">Add Achievement</a>
+                <section id="achievement-boxes"></section>
+            </p>
+            <p>
+                <button type="submit">Submit</button>
+                <div id="success-message" class="hidden">Form submitted!</div>
+
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>
