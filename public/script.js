@@ -1,19 +1,19 @@
-const getSoccerPlayers = async () => {
+const getPlayers = async () => {
     try {
-        return (await fetch("api/soccerPlayers")).json();
+        return (await fetch("api/players")).json();
     } catch (error) {
         console.log(error);
     }
 };
 
-const showSoccerPlayers = async () => {
-    let soccerPlayers = await getSoccerPlayers();
-    let soccerPlayersDiv = document.getElementById("player-list");
-    soccerPlayersDiv.innerHTML = "";
-    soccerPlayers.forEach((player) => {
+const showPlayers = async () => {
+    let players = await getPlayers();
+    let playersDiv = document.getElementById("player-list");
+    playersDiv.innerHTML = "";
+    players.forEach((player) => {
         const section = document.createElement("section");
         section.classList.add("player");
-        soccerPlayersDiv.append(section);
+        playersDiv.append(section);
 
         const a = document.createElement("a");
         a.href = "#";
@@ -39,13 +39,13 @@ const displayDetails = (player) => {
     playerDetails.append(h3);
 
     const img = document.createElement("img");
-    img.src = player.img;  
-    img.alt = player.name;  
+    img.src = player.img;
+    img.alt = player.name;
     img.classList.add("player-image");
     playerDetails.append(img);
 
     const dLink = document.createElement("a");
-    dLink.innerHTML = "	&#x2715;";
+    dLink.innerHTML = "&#x2715;";
     playerDetails.append(dLink);
     dLink.id = "delete-link";
 
@@ -79,7 +79,7 @@ const displayDetails = (player) => {
 
 const showEditForm = (player) => {
     const form = document.getElementById("add-edit-player-form");
-    form._id.value = player._id; 
+    form._id.value = player._id;
     form.name.value = player.name;
     form.team.value = player.team;
     form.position.value = player.position;
@@ -104,43 +104,56 @@ const addEditPlayer = async (e) => {
     e.preventDefault();
     const form = document.getElementById("add-edit-player-form");
     const formData = new FormData(form);
-    let response;
 
-    formData.append("achievements", getAchievements());
+    // Get achievements
+    formData.set("achievements", getAchievements());
 
     try {
         if (form._id.value == -1) {
             formData.delete("_id");
-            formData.delete("img");
-
-            response = await fetch("api/soccerPlayers", {
+            const response = await fetch("api/players", {
                 method: "POST",
                 body: formData,
             });
+
+            if (response.status !== 200) {
+                const errorData = await response.json();
+                displayErrorMessage(errorData.message);
+                console.log("Error with data", errorData);
+                return;
+            }
+
+            const newPlayer = await response.json();
+            displayDetails(newPlayer);
         } else {
-            console.log(...formData);
-            response = await fetch(`/api/soccerPlayers/${form._id.value}`, {
+            const response = await fetch(`/api/players/${form._id.value}`, {
                 method: "PUT",
                 body: formData,
             });
-        }
 
-        if (response.status !== 200) {
-            console.log("Error with data");
-        }
+            if (response.status !== 200) {
+                const errorData = await response.json();
+                displayErrorMessage(errorData.message);
+                console.log("Error updating player", errorData);
+                return;
+            }
 
-        const updatedPlayer = await response.json();
-
-        if (form._id.value != -1) {
+            const updatedPlayer = await response.json();
             displayDetails(updatedPlayer);
         }
 
         resetForm();
         document.querySelector(".dialog").classList.add("transparent");
-        showSoccerPlayers();
+        showPlayers();
     } catch (error) {
         console.error("Error:", error);
+        displayErrorMessage("An unexpected error occurred.");
     }
+};
+
+const displayErrorMessage = (message) => {
+    const errorMessageElement = document.getElementById("error-message");
+    errorMessageElement.textContent = message;
 };
 
 const showDeleteConfirmation = (player) => {
@@ -152,7 +165,7 @@ const showDeleteConfirmation = (player) => {
 };
 
 const deletePlayer = async (player) => {
-    let response = await fetch(`/api/soccerPlayers/${player._id}`, {
+    let response = await fetch(`/api/players/${player._id}`, {
         method: "DELETE",
     });
 
@@ -161,7 +174,7 @@ const deletePlayer = async (player) => {
         return;
     }
 
-    showSoccerPlayers();
+    showPlayers();
     document.getElementById("player-details").innerHTML = "";
     resetForm();
 };
@@ -200,7 +213,7 @@ const addAchievement = (e) => {
 };
 
 window.onload = () => {
-    showSoccerPlayers();
+    showPlayers();
     document.getElementById("add-edit-player-form").onsubmit = addEditPlayer;
     document.getElementById("add-link").onclick = showHideAdd;
 
